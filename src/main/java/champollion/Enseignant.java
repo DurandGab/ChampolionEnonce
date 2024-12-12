@@ -80,4 +80,10 @@ public class Enseignant extends Personne {
         // Ajouter les heures
         ue.ajouterHeuresPourUE(ue, volumeCM, volumeTD, volumeTP);
     }
+    public void addIntervention(Intervention e) {
+        if(e.getType().equals(this)) {
+            UE ue = e.getUe();
+            this.servicePrevu.getUE(ue).ajouterHeuresPourUE(ue, e.getDuree(), 0, 0);
     }
+    }
+}

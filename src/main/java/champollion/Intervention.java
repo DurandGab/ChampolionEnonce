@@ -19,6 +19,49 @@ public class Intervention {
         this.ue = ue;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public int getDuree() {
+        return duree;
+    }
+
+    public boolean isAnulle() {
+        return anulle;
+    }
+
+    public int getHeureDebut() {
+        return heureDebut;
+    }
+
+    public TypeIntervention getType() {
+        return type;
+    }
+
+    public Salle getSalle() {
+        return salle;
+    }
+
+    public UE getUe() {
+        return ue;
+    }
+
+    public void setAnulle(boolean anulle) {
+        this.anulle = anulle;
+    }
+
+    public void setHeureDebut(int heureDebut) {
+        this.heureDebut = heureDebut;
+    }
+
+    public void setSalle(Salle salle) {
+        this.salle = salle;
+    }
+
+    public void setUe(UE ue) {
+        this.ue = ue;
+    }
 
 }
 
