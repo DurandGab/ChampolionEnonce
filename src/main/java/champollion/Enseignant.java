@@ -5,11 +5,16 @@ package champollion;
  * et son emploi du temps.
  */
 public class Enseignant extends Personne {
-
+    private ServicePrevu servicePrevu;
     // TODO : rajouter les autres méthodes présentes dans le diagramme UML
 
     public Enseignant(String nom, String email) {
         super(nom, email);
+        this.servicePrevu = new ServicePrevu();
+    }
+
+    public ServicePrevu getServicePrevu() {
+        return servicePrevu;
     }
 
     /**
@@ -22,7 +27,11 @@ public class Enseignant extends Personne {
      */
     public int heuresPrevues() {
         // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        //throw new UnsupportedOperationException("Pas encore implémenté");
+        double volumeCM = this.servicePrevu.getVolumeCM() * 1.5;
+        double volumeTD = this.servicePrevu.getVolumeTD();
+        double volumeTP = this.servicePrevu.getVolumeTP() * 0.75;
+        return (int) Math.round(volumeCM + volumeTD + volumeTP);
     }
 
     /**
@@ -35,9 +44,13 @@ public class Enseignant extends Personne {
      *
      */
     public int heuresPrevuesPourUE(UE ue) {
-        // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        double volumeCM = this.servicePrevu.getUE(ue).getHeuresCM() * 1.5;
+        double volumeTD = this.servicePrevu.getUE(ue).getHeuresTD();
+        double volumeTP = this.servicePrevu.getUE(ue).getHeuresTP() * 0.75;
+        return (int) Math.round(volumeCM + volumeTD + volumeTP);
     }
+
+
 
     /**
      * Ajoute un enseignement au service prévu pour cet enseignant
@@ -49,7 +62,22 @@ public class Enseignant extends Personne {
      */
     public void ajouteEnseignement(UE ue, int volumeCM, int volumeTD, int volumeTP) {
         // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
-    }
+        //throw new UnsupportedOperationException("Pas encore implémenté");
+        UE u = this.servicePrevu.getUE(ue);
+        double heuresCM = volumeCM * 1.5;
+        double heuresTD = volumeTD * 1.0;
+        double heuresTP = volumeTP * 0.75;
+        double totalHeuresAjoutees = heuresCM + heuresTD + heuresTP;
 
-}
+        // Calculer les heures déjà prévues
+        double heuresPrevues = heuresPrevuesPourUE(ue);
+
+        // S'assurer que le total des heures ne dépasse pas le seuil permis
+        if (heuresPrevues + totalHeuresAjoutees > 192) {
+            throw new IllegalArgumentException("Le volume d'heures ajouté dépasse le maximum autorisé pour cette UE.");
+        }
+
+        // Ajouter les heures
+        ue.ajouterHeuresPourUE(ue, volumeCM, volumeTD, volumeTP);
+    }
+    }
